@@ -14,7 +14,30 @@
 	<?= view('components/navbar.php') ?>
 
   <div class="container mt-4">
-    <?= $this->renderSection('content') ?>
+	<?php if (session()->getFlashdata('success')): ?>
+		<div class="alert alert-success alert-dismissible fade show" role="alert">
+			<?= session()->getFlashdata('success') ?>
+		</div>
+	<?php endif ?>
+
+	<?php if (session()->getFlashdata('error')): ?>
+		<div class="alert alert-danger alert-dismissible fade show" role="alert">
+			<?= session()->getFlashdata('error') ?>
+		</div>
+	<?php endif ?>
+
+	<script>
+		// Auto-dismiss alerts after 2 seconds (2000 ms)
+		setTimeout(() => {
+			const alerts = document.querySelectorAll('.alert');
+			alerts.forEach(alert => {
+				const alertInstance = bootstrap.Alert.getOrCreateInstance(alert);
+				alertInstance.close();
+			});
+		}, 2000);
+	</script>
+
+  <?= $this->renderSection('content') ?>
   </div>
 
 </body>

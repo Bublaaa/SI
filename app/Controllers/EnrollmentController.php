@@ -11,7 +11,7 @@ class EnrollmentController extends BaseController
     public function index()
     {
         $model = new EnrollmentModel();
-        $data['enrollments'] = $model->getEnrollments(); // using join method
+        $data['enrollments'] = $model->getEnrollments();
         return view('enrollments/index', $data);
     }
 
@@ -26,12 +26,25 @@ class EnrollmentController extends BaseController
 
     public function store()
     {
+        $rules = [
+            'user_id' => 'required|is_not_unique[users.id]',
+            'class_id' => 'required|is_not_unique[classes.id]',
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()
+                ->withInput()
+                ->with('errors', $this->validator->getErrors())
+                ->with('error', 'Please correct the errors below.');
+        }
+
         $model = new EnrollmentModel();
         $model->save([
             'user_id' => $this->request->getPost('user_id'),
             'class_id' => $this->request->getPost('class_id'),
         ]);
-        return redirect()->to('/enrollments');
+
+        return redirect()->to('/enrollments')->with('success', 'Enrollment created successfully.');
     }
 
     public function edit($id)
@@ -47,18 +60,31 @@ class EnrollmentController extends BaseController
 
     public function update($id)
     {
+        $rules = [
+            'user_id' => 'required|is_not_unique[users.id]',
+            'class_id' => 'required|is_not_unique[classes.id]',
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()
+                ->withInput()
+                ->with('errors', $this->validator->getErrors())
+                ->with('error', 'Please correct the errors below.');
+        }
+
         $model = new EnrollmentModel();
         $model->update($id, [
             'user_id' => $this->request->getPost('user_id'),
             'class_id' => $this->request->getPost('class_id'),
         ]);
-        return redirect()->to('/enrollments');
+
+        return redirect()->to('/enrollments')->with('success', 'Enrollment updated successfully.');
     }
 
     public function delete($id)
     {
         $model = new EnrollmentModel();
         $model->delete($id);
-        return redirect()->to('/enrollments');
+        return redirect()->to('/enrollments')->with('success', 'Enrollment deleted successfully.');
     }
 }
