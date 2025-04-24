@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\UserModel;
 
 class UserController extends BaseController
@@ -28,6 +27,31 @@ class UserController extends BaseController
             'email' => $this->request->getPost('email'),
             'status' => $this->request->getPost('status'),
         ]);
+        return redirect()->to('/users');
+    }
+
+    public function edit($id)
+    {
+        $model = new UserModel();
+        $data['user'] = $model->find($id);
+        return view('users/edit', $data);
+    }
+
+    public function update($id)
+    {
+        $model = new UserModel();
+        $model->update($id, [
+            'name' => $this->request->getPost('name'),
+            'email' => $this->request->getPost('email'),
+            'status' => $this->request->getPost('status'),
+        ]);
+        return redirect()->to('/users');
+    }
+
+    public function delete($id)
+    {
+        $model = new UserModel();
+        $model->delete($id);
         return redirect()->to('/users');
     }
 }
