@@ -11,7 +11,7 @@ class ClassAssignmentController extends BaseController
     public function index()
     {
         $model = new ClassAssignmentModel();
-        $data['assignments'] = $model->findAll();
+        $data['assignments'] = $model->getAssignments();  
         return view('assignments/index', $data);
     }
 
@@ -31,6 +31,36 @@ class ClassAssignmentController extends BaseController
             'user_id' => $this->request->getPost('user_id'),
             'class_id' => $this->request->getPost('class_id'),
         ]);
+        return redirect()->to('/assignments');
+    }
+
+    public function edit($id)
+    {
+        $model = new ClassAssignmentModel();
+        $userModel = new UserModel();
+        $classModel = new ClassModel();
+        
+        $data['assignment'] = $model->find($id);
+        $data['teachers'] = $userModel->where('status', 'teacher')->findAll();
+        $data['classes'] = $classModel->findAll();
+        
+        return view('assignments/edit', $data);
+    }
+
+    public function update($id)
+    {
+        $model = new ClassAssignmentModel();
+        $model->update($id, [
+            'user_id' => $this->request->getPost('user_id'),
+            'class_id' => $this->request->getPost('class_id'),
+        ]);
+        return redirect()->to('/assignments');
+    }
+
+    public function delete($id)
+    {
+        $model = new ClassAssignmentModel();
+        $model->delete($id);
         return redirect()->to('/assignments');
     }
 }

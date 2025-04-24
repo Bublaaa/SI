@@ -2,14 +2,14 @@
 
 <?= $this->section('content') ?>
 <div class="container mt-5">
-  <h1>Create New Class</h1>
+    <h1>Create New Class</h1>
 
-  <form action="<?= site_url('class/store') ?>" method="post">
-      <?= csrf_field() ?> 
+    <form action="<?= site_url('class/store') ?>" method="post">
+        <?= csrf_field() ?> 
       
-      <div class="mb-3">
-          <label for="class_name" class="form-label">Class Name</label>
-          <input type="text" class="form-control" id="class_name" name="class_name" required>
+        <div class="mb-3">
+            <label for="class_name" class="form-label">Class Name</label>
+        <input type="text" class="form-control" id="class_name" name="class_name" required>
       </div>
 
       <div class="mb-3">
