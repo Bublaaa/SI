@@ -7,6 +7,14 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'PaginationController::index');
 
+$routes->get('class', 'ClassController::index');
+$routes->get('class/create', 'ClassController::create');
+$routes->post('class/store', 'ClassController::store');
+$routes->get('class/edit/(:num)', 'ClassController::edit/$1');
+$routes->post('class/update/(:num)', 'ClassController::update/$1');
+$routes->get('class/delete/(:num)', 'ClassController::delete/$1');
+
+
 $routes->get('/users', 'UserController::index');
 $routes->get('/users/create', 'UserController::create');
 $routes->post('/users/store', 'UserController::store');

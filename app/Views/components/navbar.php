@@ -10,6 +10,9 @@
           <a class="nav-link active" aria-current="page" href="<?= site_url('users') ?>">Users</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="<?= site_url('class') ?>">Class</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="<?= site_url('class-assignment') ?>">Class Assignment</a>
         </li>
         <li class="nav-item">

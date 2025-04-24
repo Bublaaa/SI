@@ -25,6 +25,30 @@ class ClassController extends BaseController
             'class_name' => $this->request->getPost('class_name'),
             'description' => $this->request->getPost('description'),
         ]);
-        return redirect()->to('/classes');
+        return redirect()->to('/class');
+    }
+
+    public function edit($id)
+    {
+        $model = new ClassModel();
+        $data['class'] = $model->find($id);
+        return view('classes/edit', $data);
+    }
+
+    public function update($id)
+    {
+        $model = new ClassModel();
+        $model->update($id, [
+            'class_name' => $this->request->getPost('class_name'),
+            'description' => $this->request->getPost('description'),
+        ]);
+        return redirect()->to('/class');
+    }
+
+    public function delete($id)
+    {
+        $model = new ClassModel();
+        $model->delete($id);
+        return redirect()->to('/class');
     }
 }
