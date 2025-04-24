@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\ClassModel;
+use App\Models\ClassAssignmentModel;
+use App\Models\EnrollmentModel;
 
 class ClassController extends BaseController
 {
@@ -73,8 +75,23 @@ class ClassController extends BaseController
 
     public function delete($id)
     {
-        $model = new ClassModel();
-        $model->delete($id);
-        return redirect()->to('/class')->with('success', 'Class deleted successfully.');
+			$enrollmentModel = new EnrollmentModel();
+			$assignModel = new ClassAssignmentModel();
+			$enrollment = $enrollmentModel->where('class_id', $id)->first();
+			$assignment = $assignModel->where('class_id', $id)->first();
+
+			if ($enrollment) {
+				return redirect()->to('/class')
+					->with('error', 'Cannot delete class. Please delete the enrollment data first.')
+					->with('errors', ['enrollment' => 'User has active enrollments and must be removed from class enrollment first.']);
+			}
+			if ($assignment) {
+				return redirect()->to('/class')
+					->with('error', 'Cannot delete class. Please delete the class assignment data first.')
+					->with('errors', ['class' => 'Class has active class assignment and must be removed from class class assignment first.']);
+			}
+			$model = new ClassModel();
+			$model->delete($id);
+			return redirect()->to('/class')->with('success', 'Class deleted successfully.');
     }
 }

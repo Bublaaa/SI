@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\UserModel;
+use App\Models\EnrollmentModel;
+use App\Models\ClassAssignmentModel;
 
 class UserController extends BaseController
 {
@@ -80,8 +82,26 @@ class UserController extends BaseController
 
     public function delete($id)
     {
-        $model = new UserModel();
-        $model->delete($id);
+        $enrollmentModel = new EnrollmentModel();
+        $assignModel = new ClassAssignmentModel();
+        $enrollment = $enrollmentModel->where('user_id', $id)->first();
+        $assignment = $assignModel->where('user_id', $id)->first();
+
+        if ($enrollment) {
+          return redirect()->to('/users')
+            ->with('error', 'Cannot delete user. Please delete the enrollment data first.')
+            ->with('errors', ['enrollment' => 'User has active enrollments and must be removed from class enrollment first.']);
+        }
+        if ($assignment) {
+          return redirect()->to('/users')
+            ->with('error', 'Cannot delete user. Please delete the class assignment data first.')
+            ->with('errors', ['class assignment' => 'User has active class assignment and must be removed from class class assignment first.']);
+        }
+
+        $userModel = new UserModel();
+        $userModel->delete($id);
+
         return redirect()->to('/users')->with('success', 'User deleted successfully.');
     }
+
 }
