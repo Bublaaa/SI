@@ -16,7 +16,7 @@
           <a class="nav-link" href="<?= site_url('assignments') ?>">Class Assignment</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?= site_url('enrollment') ?>">Enrollment</a>
+          <a class="nav-link" href="<?= site_url('enrollments') ?>">Enrollment</a>
         </li>
       </ul>
     </div>

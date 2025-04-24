@@ -7,6 +7,13 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'PaginationController::index');
 
+$routes->get('/users', 'UserController::index');
+$routes->get('/users/create', 'UserController::create');
+$routes->post('/users/store', 'UserController::store');
+$routes->get('/users/edit/(:num)', 'UserController::edit/$1');
+$routes->put('/users/update/(:num)', 'UserController::update/$1');
+$routes->get('/users/delete/(:num)', 'UserController::delete/$1');
+
 $routes->get('class', 'ClassController::index');
 $routes->get('class/create', 'ClassController::create');
 $routes->post('class/store', 'ClassController::store');
@@ -21,10 +28,11 @@ $routes->get('assignments/edit/(:num)', 'ClassAssignmentController::edit/$1');
 $routes->post('assignments/update/(:num)', 'ClassAssignmentController::update/$1');
 $routes->get('assignments/delete/(:num)', 'ClassAssignmentController::delete/$1');
 
+$routes->get('/enrollments', 'EnrollmentController::index');
+$routes->get('/enrollments/create', 'EnrollmentController::create');
+$routes->post('/enrollments/store', 'EnrollmentController::store');
+$routes->get('/enrollments/edit/(:num)', 'EnrollmentController::edit/$1');
+$routes->post('/enrollments/update/(:num)', 'EnrollmentController::update/$1');
+$routes->get('/enrollments/delete/(:num)', 'EnrollmentController::delete/$1');
 
-$routes->get('/users', 'UserController::index');
-$routes->get('/users/create', 'UserController::create');
-$routes->post('/users/store', 'UserController::store');
-$routes->get('/users/edit/(:num)', 'UserController::edit/$1');
-$routes->put('/users/update/(:num)', 'UserController::update/$1');
-$routes->get('/users/delete/(:num)', 'UserController::delete/$1');
+
